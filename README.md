@@ -25,7 +25,8 @@ A simple server to run for my DeepStream SDK application running on my NVIDIA Je
 ## RTSP Server Setup
 
 1. Double check the Linux architecture with <code>uname -m</code>, then download the appropriate .tar from the rtsp-simple-server [releases](https://github.com/aler9/rtsp-simple-server/releases) page. This simply contains an executable and config file, and requires no dependencies.
-2. Plug in the USB camera and make sure it is recognized with: <code>v4l2-ctl --list-devices</code>, and then list all available formats with: <code>v4l2 -d /dev/video0 --list-formats-ext</code>
+2. Untar the file via: <code>tar -xvf rtsp-simple-server_v0.16.2_linux_arm7.tar.gz</code>, and move them into their own directory if desired.
+3. Plug in the USB camera and make sure it is recognized with: <code>v4l2-ctl --list-devices</code>, and then list all available formats with: <code>v4l2 -d /dev/video0 --list-formats-ext</code>
 > If this is the only USB device and camera plugged into the Pi, it should be video0, but double-check with --list-devices.
 
 My camera has these possible outputs:
