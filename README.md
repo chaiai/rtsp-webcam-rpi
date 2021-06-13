@@ -21,8 +21,11 @@ A simple server to run for my DeepStream SDK application running on my NVIDIA Je
 <code>ssh pi@[IP_ADDRESS]</code> (default password is 'raspberry')
 
 3. Connect to Wifi using <code>sudo raspi-config</code>, update and upgrade packages using <code>sudo apt update --fix-missing && sudo apt upgrade -y</code> and then reboot.
-4. Double check the Linux architecture with <code>uname -m</code>, then download the appropriate .tar from the rtsp-simple-server [releases](https://github.com/aler9/rtsp-simple-server/releases) page. This simply contains an executable and config file, and requires no dependencies.
-5. Plug in the USB camera and make sure it is recognized with: <code>v4l2-ctl --list-devices</code>, and then list all available formats with: <code>v4l2 -d /dev/video0 --list-formats-ext</code>
+
+## RTSP Server Setup
+
+1. Double check the Linux architecture with <code>uname -m</code>, then download the appropriate .tar from the rtsp-simple-server [releases](https://github.com/aler9/rtsp-simple-server/releases) page. This simply contains an executable and config file, and requires no dependencies.
+2. Plug in the USB camera and make sure it is recognized with: <code>v4l2-ctl --list-devices</code>, and then list all available formats with: <code>v4l2 -d /dev/video0 --list-formats-ext</code>
 > If this is the only USB device and camera plugged into the Pi, it should be video0, but double-check with --list-devices.
 
 My camera has these possible outputs:
@@ -102,7 +105,7 @@ My camera has these possible outputs:
 
 After testing a few different video formats and resolutions, I settled on MJPEG 1280x720 (720p) as the input encoded using h264_omx
 
-6. Edit rtsp-simple-server.yml via <code>nano rtsp-simple-server.yml</code> and go to the **Path options** section. Replace the entire <code>paths</code> section with:
+3. Edit rtsp-simple-server.yml via <code>nano rtsp-simple-server.yml</code> and go to the **Path options** section. Replace the entire <code>paths</code> section with:
 
 		paths:
 	  	  webcam:
@@ -115,7 +118,7 @@ Params to change:
 - **-c:v, -b:v** are the video codec and video bitrate to use by ffmpeg (the output encoding that is streamed)
 - **-an** removes audio (I didn't test with audio, so unsure if necessary)
 
-7. Run the server! Save the config file and run: <code>./rtsp-simple-server</code>
+4. Run the server! Save the config file and run: <code>./rtsp-simple-server</code>
 
 #### View the stream with VLC using: <code>vlc rtsp://[RPI_IP_ADDRESS]:8554/webcam</code>
 
