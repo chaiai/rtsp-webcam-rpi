@@ -107,5 +107,3 @@ paths:
   chaipi:
     runOnInit: ffmpeg -input_format mjpeg -f video4linux2 -s 1280x720 -r 30 -i /dev/video0 -c:v h264_omx -r 30 -b:v 8M -an -f rtsp rtsp://localhost:$RTSP_PORT/$RTSP_PATH
     runOnInitRestart: yes
-   # runOnPublish: ffmpeg -i rtsp://localhost:$RTSP_PORT/$RTSP_PATH -c:v libx264 -f rtsp rtsp://localhost:$RTSP_PORT/compressed
-   # runOnPublishRestart: yes
