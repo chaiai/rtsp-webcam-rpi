@@ -1,0 +1,111 @@
+###############################################
+# General options
+
+# sets the verbosity of the program; available values are "warn", "info", "debug".
+logLevel: info
+# destinations of log messages; available values are "stdout", "file" and "syslog".
+logDestinations: [stdout]
+# if "file" is in logDestinations, this is the file which will receive the logs.
+logFile: rtsp-simple-server.log
+
+# timeout of read operations.
+readTimeout: 10s
+# timeout of write operations.
+writeTimeout: 10s
+# number of read buffers.
+# a higher number allows a higher throughput,
+# a lower number allows to save RAM.
+readBufferCount: 512
+
+# enable Prometheus-compatible metrics.
+metrics: no
+# address of the metrics listener.
+metricsAddress: :9998
+
+# enable pprof-compatible endpoint to monitor performances.
+pprof: no
+# address of the pprof listener.
+pprofAddress: :9999
+
+# command to run when a client connects to the server.
+# this is terminated with SIGINT when a client disconnects from the server.
+# the server port is available in the RTSP_PORT variable.
+runOnConnect:
+# the restart parameter allows to restart the command if it exits suddenly.
+runOnConnectRestart: no
+
+###############################################
+# RTSP options
+
+# disable support for the RTSP protocol.
+rtspDisable: no
+# supported RTSP stream protocols.
+# UDP is the most performant, but can cause problems if there's a NAT between
+# server and clients, and doesn't support encryption.
+# TCP is the most versatile, and does support encryption.
+# The handshake is always performed with TCP.
+protocols: [udp, tcp]
+# encrypt handshake and TCP streams with TLS (RTSPS).
+# available values are "no", "strict", "optional".
+encryption: no
+# address of the TCP/RTSP listener. This is used only if encryption is "no" or "optional".
+rtspAddress: :8554
+# address of the TCP/TLS/RTSPS listener. This is used only if encryption is "strict" or "optional".
+rtspsAddress: :8555
+# address of the UDP/RTP listener. This is used only if "udp" is in protocols.
+rtpAddress: :8000
+# address of the UDP/RTCP listener. This is used only if "udp" is in protocols.
+rtcpAddress: :8001
+# path to the server key. This is used only if encryption is "strict" or "optional".
+# this can be generated with:
+# openssl genrsa -out server.key 2048
+# openssl req -new -x509 -sha256 -key server.key -out server.crt -days 3650
+serverKey: server.key
+# path to the server certificate. This is used only if encryption is "strict" or "optional".
+serverCert: server.crt
+# authentication methods.
+authMethods: [basic, digest]
+# read buffer size.
+# this doesn't influence throughput and shouldn't be touched unless the server
+# reports errors about the buffer size.
+readBufferSize: 2048
+
+###############################################
+# RTMP options
+
+# disable support for the RTMP protocol.
+rtmpDisable: no
+# address of the RTMP listener.
+rtmpAddress: :1935
+
+###############################################
+# HLS options
+
+# disable support for the HLS protocol.
+hlsDisable: no
+# address of the HLS listener.
+hlsAddress: :8888
+# number of HLS segments to generate.
+# increasing segments allows more buffering,
+# decreasing segments decrease latency.
+hlsSegmentCount: 3
+# minimum duration of each segment.
+# the real segment duration is also influenced by the interval of IDR frames
+# (since the server edit the segment duration to include at least one IDR frame).
+hlsSegmentDuration: 1s
+
+###############################################
+# Path options
+
+# these settings are path-dependent.
+# it's possible to use regular expressions by using a tilde as prefix.
+# for example, "~^(test1|test2)$" will match both "test1" and "test2".
+# for example, "~^prefix" will match all paths that start with "prefix".
+# the settings under the path "all" are applied to all paths that do not match
+# another entry.
+paths:
+  chaipi:
+    runOnInit: ffmpeg -input_format mjpeg -f video4linux2 -s 1280x720 -r 30 -i /dev/video0 -c:v h264_omx -r 30 -b:v 8M -an -f rtsp rtsp://localhost:$RTSP_PORT/$RTSP_PATH
+    runOnInitRestart: yes
+   # runOnPublish: ffmpeg -i rtsp://localhost:$RTSP_PORT/$RTSP_PATH -c:v libx264 -f rtsp rtsp://localhost:$RTSP_PORT/compressed
+   # runOnPublishRestart: yes
