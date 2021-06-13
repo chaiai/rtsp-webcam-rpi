@@ -21,7 +21,7 @@ A simple RTSP server that uses a USB webcam and a Raspberry Pi 4B to stream via 
 Assuming you are using a Raspberry Pi with armv7 architecture like I did, you can just clone this repo and modify the config file as needed
 
         git clone https://github.com/chaiai/rtsp-webcam-rpi.git
-        cd rtsp-webcam-rpi
+        cd rtsp-webcam-rpi/rtsp
         (Optional) nano rtsp-simple-server.yml
         ./rtsp-webcam-rpi
         
