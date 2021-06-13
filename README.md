@@ -22,6 +22,7 @@ Assuming you are using a Raspberry Pi with armv7 architecture like I did, you ca
 
         git clone https://github.com/chaiai/rtsp-webcam-rpi.git
         cd rtsp-webcam-rpi/rtsp
+        chmod +x rtsp-simple-server
         (Optional) nano rtsp-simple-server.yml
         ./rtsp-webcam-rpi
         
