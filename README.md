@@ -5,7 +5,7 @@ A simple RTSP server that uses a USB webcam and a Raspberry Pi 4B to stream via 
 ## Requirements:
 - Raspberry Pi 4B 4GB with WiFi (unsure how models older than 4 will do)
 - MicroSD card (at least 16GB)
-- USB-C power supply (3.5A recommended [example](https://www.amazon.com/dp/B07TYQRXTK))
+- USB-C power supply (2.5A recommended [example](https://www.amazon.com/dp/B07TYQRXTK))
 - USB Webcam (mine is the [CyberTrack H4](https://www.adesso.com/product/cybertrack-h4-1080p-hd-usb-webcam-with-built-in-microphone/))
 - (Optional) Ethernet cable for headless setup, GPIO fan for temperature management
 
